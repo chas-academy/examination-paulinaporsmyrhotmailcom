@@ -1,10 +1,11 @@
 #include <stdio.h>
+#include <string.h>
 #include <ctype.h>
 
 #define NUM_STUDENTS 5
 #define NUM_TESTS 13
 
-int main(){
+int main() {
     char names[NUM_STUDENTS][11];
     int scores[NUM_STUDENTS][NUM_TESTS];
     float avg_scores[NUM_STUDENTS];
@@ -12,12 +13,14 @@ int main(){
     int i, j;
 
     for (i = 0; i < NUM_STUDENTS; i++) {
-        printf("Enter student %d data (name followed by 13 test scores):\n", i + 1);
+        printf("Enter student %d data (name followed by 13 test scores): ", i + 1);
         scanf("%s", names[i]);
 
-        int sum = 0;
         for (j = 0; j < NUM_TESTS; j++) {
             scanf("%d", &scores[i][j]);
+        }
+        int sum = 0;
+        for (j = 0; j < NUM_TESTS; j++) {
             sum += scores[i][j];
         }
         avg_scores[i] = sum / (float)NUM_TESTS;
@@ -32,13 +35,16 @@ int main(){
     }
 
     names[highestIndex][0] = toupper(names[highestIndex][0]);
-    printf("%s\n", names[highestIndex]);
+        printf("Step 1 - Student with highest score: %s\n", names[highestIndex]);
+
 
     float group_avg_score = total_avg_score / NUM_STUDENTS;
 
+    printf("Step 2 - Students with score under the group avarage (in their input order):\n");
     int any_below_avg = 0;
-    for (i = 0; i < NUM_STUDENTS; i++){
-        if (avg_scores[i] < group_avg_score){
+    for (i = 0; i < NUM_STUDENTS; i++) {
+        if (avg_scores[i] < group_avg_score) {
+
             names[i][0] = toupper(names[i][0]);
             printf("%s\n", names[i]);
             any_below_avg = 1;
