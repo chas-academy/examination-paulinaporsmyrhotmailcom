@@ -41,7 +41,7 @@ int main() {
 
         }
         students[highestIndex].name[0] = toupper(students[highestIndex].name[0]);
-        printf("Steg 1 - Elev med högst medelpoäng:\n"); 
+     
         printf("%s\n", students[highestIndex].name);
 
         int printed = 0;
@@ -49,7 +49,7 @@ int main() {
         for (i = 0; i < NUM_STUDENTS; i++) {
             if (students[i].average < totalAverage) {
                if (!underAveragePrinted) {
-                printf("Steg 2 - Elever med medelpoäng under gruppens totala medel (i ordningen de matades in):\n");
+                
                 underAveragePrinted = 1;
                } 
                students[i].name[0] = toupper(students[i].name[0]);
