@@ -5,53 +5,57 @@
 #define NUM_STUDENTS 5
 #define NUM_TESTS 13
 
+struct Student {
+    char name[11];
+    int scores[NUM_TESTS];
+    float average;
+};
+
 int main() {
-    char names[NUM_STUDENTS][11];
-    int scores[NUM_STUDENTS][NUM_TESTS];
-    float avg_scores[NUM_STUDENTS];
-    float total_avg_score = 0.0;
+    struct Student students[NUM_STUDENTS];
+    float totalAverage = 0.0;
     int i, j;
 
     for (i = 0; i < NUM_STUDENTS; i++) {
-        printf("Enter student %d data (name followed by 13 test scores): ", i + 1);
-        scanf("%s", names[i]);
-
+        scanf("%s", students[i].name);
         for (j = 0; j < NUM_TESTS; j++) {
-            scanf("%d", &scores[i][j]);
+            scanf("%d", &students[i].scores[j]);
         }
+
         int sum = 0;
-        for (j = 0; j < NUM_TESTS; j++) {
-            sum += scores[i][j];
+        for (j = 0; j < NUM_TESTS; j++){
+            sum += students[i].scores[j];
         }
-        avg_scores[i] = sum / (float)NUM_TESTS;
-        total_avg_score += avg_scores[i];
+        students[i].average = sum / (float)NUM_TESTS;
+        totalAverage += students[i].average;
     }
+        totalAverage /= NUM_STUDENTS;
 
-    int highestIndex = 0;
-    for (i = 1; i < NUM_STUDENTS; i++ ) {
-        if (avg_scores[i] > avg_scores[highestIndex]) {
-            highestIndex = i;
+        float highestAverage = 0;
+        int highestIndex = 0;
+        for (i = 0; i < NUM_STUDENTS; i++) {
+            if (students[i].average > highestAverage) {
+                highestAverage = students[i].average;
+                highestIndex = i;
+            }
+
         }
-    }
+        students[highestIndex].name[0] = toupper(students[highestIndex].name[0]);
+        printf("Steg 1 - Elev med högst medelpoäng:\n"); 
+        printf("%s\n", students[highestIndex].name);
 
-    names[highestIndex][0] = toupper(names[highestIndex][0]);
-        printf("Step 1 - Student with highest score: %s\n", names[highestIndex]);
-
-
-    float group_avg_score = total_avg_score / NUM_STUDENTS;
-
-    printf("Step 2 - Students with score under the group avarage (in their input order):\n");
-    int any_below_avg = 0;
-    for (i = 0; i < NUM_STUDENTS; i++) {
-        if (avg_scores[i] < group_avg_score) {
-
-            names[i][0] = toupper(names[i][0]);
-            printf("%s\n", names[i]);
-            any_below_avg = 1;
-        }
-    }
-        if (!any_below_avg) {
-            printf("\n");
+        int printed = 0;
+        int underAveragePrinted = 0;
+        for (i = 0; i < NUM_STUDENTS; i++) {
+            if (students[i].average < totalAverage) {
+               if (!underAveragePrinted) {
+                printf("Steg 2 - Elever med medelpoäng under gruppens totala medel (i ordningen de matades in):\n");
+                underAveragePrinted = 1;
+               } 
+               students[i].name[0] = toupper(students[i].name[0]);
+                printf("%s\n", students[i].name);
+                printed = 1;
+            }
         }
 
         return 0;
